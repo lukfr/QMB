@@ -60,11 +60,22 @@ prediction_values3 <- data.frame(HEIGHT = c(100/2.54),
 predict(regSize2,prediction_values3)
 # result: price is predicted to be $7.45 million for 100x150
 
+# 2) In principle, shall I go to Christie's or Sotheby's or any other auctioneer
+#Dummy Variables for the 3 auctioneer options
+Christies <- ifelse(HOUSE == 1, 1, 0)
+Sothebys <- ifelse(HOUSE == 2, 1, 0)
+Others <- ifelse(HOUSE == 3, 1, 0)
 
-regHouse <- lm(PRICE ~ size + SIGNED + HOUSE)
-summary(regHouse)
+#separate regression models
+regChristies <- lm(PRICE ~ size + Christies)
+summary(regChristies)
+regSothebys <- lm(PRICE ~ size + Sothebys)
+summary(regSothebys)
+regOthers <- lm(PRICE ~ size + Others)
+summary(regOthers)
+# No statistical significance --> Doesn't matter which auctioneer
 
-
-
-regSigned <- lm(PRICE ~ SIGNED)
+# 3) What is the value of a Monet signature?
+regSigned <- lm(PRICE ~ size + SIGNED)
 summary(regSigned)
+#Result: a signature is worth $2.404 Million 
